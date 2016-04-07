@@ -1,0 +1,301 @@
+#+TITLE: Notes on Mathematical Logic By Ian Chiswell and Wilfrid Hodges
+#+AUTHOR: Sixuan Thomas Lou
+#+LATEX_HEADER: \usepackage{bussproofs} \usepackage[makeroom]{cancel}
+\newpage
+
+* Basic Notions
+** Statement:
+
+Later formalized with first-order language
+
+** set of statements
+
+
+** Sequent
+
+\[\Gamma \vdash \phi\]
+  where \Gamma is a set of statements (assumptions)
+        \phi   is a statement (conclusion)
+
+
+The sequent is correct if and only if there is a proof of \(\phi\)
+with no undischarged assumptions
+
+*** Sequent rules
+
+- Axiom:         If \phi \in \Gamma, then \Gamma $\vdash$ \phi is correct
+- Transitivity : If \Delta $\vdash$ \phi and for all statements \delta in \Delta,
+               the sequent \Gamma $\vdash$ \delta is correct,
+               then \Gamma $\vdash$ \phi is correct
+
+
+** Natural Deduction
+
+Natural Deduction rules tells how to build a _proof_ for sequents,
+especially called _derivations_.
+
+Derivations + rules of using them gives _natural deduction calculus_
+
+*** Natural Deduction Rules
+
+- Axiom:
+Let \phi be a statement, then
+      \[ \phi \]
+is a derivation whose conclusion is \phi , with one undischarged assumption, namely \phi
+
+
+** Simple logical connectives with introduction / elimination rules
+
+*** And ($\wedge$)
+
+**** \textsc{Natural Deduction Rules}
+
+- If \alwaysNoLine \AxiomC{$D$} \UnaryInfC{$\phi$} \DisplayProof and
+ \alwaysNoLine \AxiomC{$D'$} \UnaryInfC{$\psi$} \DisplayProof are derivations of \phi and \psi respectively,
+ then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi$}
+  \noLine
+  \AxiomC{$D'$} \UnaryInfC{$\psi$}
+  \RightLabel{$(\wedge I)$}
+  \BinaryInfC{$\phi \wedge \psi$}
+\end{prooftree}
+is a derivation of (\phi \wedge \psi).
+
+- If  \noLine \AxiomC{$D$} \UnaryInfC{$\phi \wedge \psi$} \DisplayProof is a derivation of $(\phi \wedge \psi)$, then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi \wedge \psi$}
+  \RightLabel{$(\wedge E)$}
+  \UnaryInfC{$\phi$}
+\end{prooftree}
+
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi \wedge \psi$}
+  \RightLabel{$(\wedge E)$}
+  \UnaryInfC{$\psi$}
+\end{prooftree}
+
+are derivations of \phi and \psi respectively.
+
+
+**** \textsc{Sequent Rules}
+
+- If $\Gamma \vdash \phi$ and $\Delta \vdash \psi$ are correct sequents, then $\Gamma \cup \Delta \vdash (\phi \wedge \psi)$ is a correct sequent.
+- If $\Gamma \vdash (\phi \wedge \psi)$ is a correct sequent, then $\Gamma \vdash \phi$ and $\Gamma \vdash \psi$ are correct sequents.
+
+*** Implication (\rightarrow)
+**** \textsc{Natural Deduction Rules}
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\phi$} \DisplayProof is a derivation of \psi , \phi is a statement,
+then 
+\begin{prooftree}
+  \noLine
+  \AxiomC{$\cancel{\phi}$} \UnaryInfC{$D$} \noLine \UnaryInfC{$\psi$}
+  \RightLabel{$(\rightarrow I)$}
+  \UnaryInfC{$\phi \rightarrow \psi$}
+\end{prooftree}
+is a derivation of (\phi \rightarrow \psi).
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\phi$} \DisplayProof and \noLine \AxiomC{$D'$} \UnaryInfC{$\phi \rightarrow \psi$} \DisplayProof are derivations of \phi and $\phi \rightarrow \psi$ respectively,
+then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi$}
+  \noLine
+  \AxiomC{$D'$} \UnaryInfC{$\phi \rightarrow \psi$}
+  \RightLabel{$(\rightarrow E)$}
+  \BinaryInfC{$\psi$}
+\end{prooftree}
+
+is a derivation of $\psi$.
+
+
+**** \textsc{Sequent Rules}
+
+- If $\Gamma \cup \{\phi\} \vdash \psi$ is a correct sequent, then $\Gamma \vdash (\phi \rightarrow \psi)$ is also correct.
+- If $\Gamma \vdash (\phi \vdash \psi)$ and $\Delta \vdash \phi$ are correct sequents, then so is $\Gamma \cup \Delta \vdash \psi$.
+
+
+*** Equivalence (\leftrightarrow)
+**** \textsc{Natural Deduction Rules}
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\phi \rightarrow \psi$} \DisplayProof and \noLine \AxiomC{$D'$} \UnaryInfC{$\psi \rightarrow \phi$} \DisplayProof are derivations of $\phi \rightarrow \psi$ and $\psi \rightarrow \phi$ respectively,
+then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi \rightarrow \psi$}
+  \noLine
+  \AxiomC{$D'$} \UnaryInfC{$\psi \rightarrow \phi$}
+  \RightLabel{$(\leftrightarrow I)$}
+  \BinaryInfC{$\phi \leftrightarrow \psi$}
+\end{prooftree}
+is a derivation of $(\phi \leftrightarrow \psi)$.
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\phi \leftrightarrow \psi$} \DisplayProof is a derivation of $(\phi \leftrightarrow \psi)$,
+then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi \leftrightarrow \psi$}
+  \RightLabel{$(\leftrightarrow E)$}
+  \UnaryInfC{$\phi \rightarrow \psi$}
+\end{prooftree}
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi \leftrightarrow \psi$}
+  \RightLabel{$(\leftrightarrow E)$}
+  \UnaryInfC{$\psi \rightarrow \phi$}
+\end{prooftree}
+are derivations of $(\phi \rightarrow \psi)$ and $(\psi \rightarrow \phi)$ respectively.
+
+
+**** \textsc{Sequent Rules}
+
+- If $\Gamma \vdash \phi \rightarrow \psi$ and $\Delta \vdash \psi \rightarrow \phi$ are correct sequents, then so is $\Gamma \cup \Delta \vdash \phi \leftrightarrow \psi$
+- If $\Gamma \vdash \phi \leftrightarrow \psi$ is a correct sequent, then so is $\Gamma \vdash \phi \rightarrow \psi$ and $\Gamma \vdash \psi \rightarrow \phi$
+
+*** Negation (\neg)
+
+**** \textsc{Natural Deduction Rules}
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\bot$} \DisplayProof is a derivation if $\bot$,
+then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$\cancel{\phi}$}
+  \UnaryInfC{$D$}
+  \noLine
+  \UnaryInfC{$\bot$}
+  \RightLabel{$(\neg I)$}
+  \UnaryInfC{$(\neg \phi)$}
+\end{prooftree}
+is a derivation of $(\neg \phi)$.
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\phi$} \DisplayProof and \noLine \AxiomC{$D'$} \UnaryInfC{$\neg \phi$} \DisplayProof are derivations of \phi and $(\neg \phi)$ respectively,
+then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$\phi$}
+  \noLine
+  \AxiomC{$D'$} \UnaryInfC{$\neg \phi$}
+  \RightLabel{$(\neg E)$}
+  \BinaryInfC{$\bot$}
+\end{prooftree}
+is a derivation of $\bot$.
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\bot$} \DisplayProof is a derivation of $\bot$,
+then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$\cancel{(\neg \phi)}$}
+  \UnaryInfC{$D$}
+  \noLine
+  \UnaryInfC{$\bot$}
+  \RightLabel{(\textsc{raa})}
+  \UnaryInfC{$\phi$}
+\end{prooftree}
+is a derivation of \phi.
+
+**** \textsc{Sequent Rules}
+
+- If $\Gamma \cup \{\phi\} \vdash \bot$ is a correct sequent, then $\Gamma \vdash (\neg \phi)$ is also a correct sequent.
+- If $\Gamma \vdash \phi$ and $\Delta \vdash \neg \phi$ are correct sequents, then $\Gamma \cup \Delta \vdash \bot$ is also correct.
+- If $\Gamma \cup \{(\neg \phi)\} \vdash \bot$ is a correct sequent, then $\Gamma \vdash \phi$ is also correct.
+
+
+
+**** \textsc{Example.}
+Find natural deduction proofs of the following sequent.
+\[ \{(\neg (\phi \leftrightarrow \psi))\} \vdash (\neg \phi) \leftrightarrow \psi \]
+
+\begin{prooftree}
+
+
+  \AxiomC{$\cancel{\phi}$}
+  \AxiomC{$\cancel{\neg \phi}$}
+  \BinaryInfC{$\bot$}
+
+  \UnaryInfC{$\psi$}
+  \UnaryInfC{$\phi \rightarrow \psi$}
+
+  \AxiomC{$\cancel{\psi}$}
+  \AxiomC{$\cancel{\neg \psi}$}
+  \BinaryInfC{$\bot$}
+
+  \UnaryInfC{$\phi$}
+  \UnaryInfC{$\psi \rightarrow \phi$}
+
+  \BinaryInfC{$(\phi \rightarrow \psi) \wedge (\psi \rightarrow \phi)$}
+  \UnaryInfC{$\phi \leftrightarrow \psi$}
+
+  \AxiomC{$\neg (\phi \leftrightarrow \psi)$}
+
+  \BinaryInfC{$\bot$}
+  \UnaryInfC{$\psi$}
+  \UnaryInfC{$(\neg \phi) \rightarrow \psi$}
+
+
+  \AxiomC{$\cancel{\psi}$}
+  \UnaryInfC{$\phi \rightarrow \psi$}
+
+  \AxiomC{$\cancel{\phi}$}
+  \UnaryInfC{$\psi \rightarrow \phi$}
+
+  \BinaryInfC{$(\phi \rightarrow \psi) \wedge (\psi \rightarrow \phi)$}
+  \UnaryInfC{$\phi \leftrightarrow \psi$}
+
+  \AxiomC{$\neg (\phi \leftrightarrow \psi)$}
+
+  \BinaryInfC{$\bot$}
+  \UnaryInfC{$\neg \phi$}
+  \UnaryInfC{$\psi \rightarrow (\neg \phi)$}
+
+\BinaryInfC{$((\neg \phi) \rightarrow \psi) \wedge (\psi \rightarrow (\neg \phi))$}
+\UnaryInfC{$(\neg \phi) \leftrightarrow \psi$}
+\end{prooftree}
+
+*** Or (\vee)
+
+**** \textsc{Natural Deduction Rules}
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\phi$} \DisplayProof is a derivation of \phi and \psi is a statement, then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$}
+  \UnaryInfC{$\phi$}
+  \RightLabel{$(\vee I)$}
+  \UnaryInfC{$\phi \vee \psi$}
+\end{prooftree}
+- If \noLine \AxiomC{$D$} \UnaryInfC{$\psi$} \DisplayProof is a derivation of \psi and \phi is a statement, then
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$}
+  \UnaryInfC{$\psi$}
+  \RightLabel{$(\vee I)$}
+  \UnaryInfC{$\phi \vee \psi$}
+\end{prooftree}
+
+- If \noLine \AxiomC{$D$} \UnaryInfC{$(\phi \vee \psi)$} \DisplayProof ,  \noLine \AxiomC{$D'$} \UnaryInfC{$\chi$} \DisplayProof and \noLine \AxiomC{$D''$} \UnaryInfC{$\chi$} \DisplayProof are derivations of $(\phi \vee \psi)$ and \chi respectively, then,
+\begin{prooftree}
+  \noLine
+  \AxiomC{$D$} \UnaryInfC{$(\phi \vee \psi)$}
+  \noLine
+  \AxiomC{$\cancel{\phi}$} \UnaryInfC{$D'$} \noLine \UnaryInfC{$\chi$}
+  \noLine
+  \AxiomC{$\cancel{\phi}$} \UnaryInfC{$D''$} \noLine \UnaryInfC{$\chi$}
+  \RightLabel{$(\vee E)$}
+  \TrinaryInfC{$\chi$}
+\end{prooftree}
+
+**** \textsc{Sequent Rules}
+
+- If $\Gamma \vdash \phi$ is a correct sequent, \psi is a statement, then $\Gamma \vdash (\phi \vee \psi)$ is also a correct sequent.
+- If $\Gamma \vdash \psi$ is a correct sequent, \psi is a statement, then $\Gamma \vdash (\phi \vee \psi)$ is also a correct sequent.
+- If $\Gamma \cup \{\phi\} \vdash \chi$, $\Delta \cup \{\psi\} \vdash \chi$ are correct sequents, then $\Gamma \cup \Delta \cup \{(\phi \vee \psi)\} \vdash \chi$ is correct.
+
+
+
+
+** First order language
